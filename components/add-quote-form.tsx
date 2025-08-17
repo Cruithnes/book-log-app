@@ -1,6 +1,10 @@
 "use client";
 
-import { Book } from "@/app/generated/prisma";
+import { Book as PrismaBook, Quote } from "@/app/generated/prisma";
+
+type Book = PrismaBook & {
+    quotes?: Quote[];
+};
 
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
