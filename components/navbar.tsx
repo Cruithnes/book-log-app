@@ -4,6 +4,8 @@ import { logoutAction } from "@/lib/actions";
 import { auth } from "@/auth";
 import { isAdmin } from "@/lib/utils";
 
+import Link from "next/link";
+
 export default async function Navbar() {
     const session = await auth();
     const isMe = isAdmin(session);
@@ -28,10 +30,10 @@ export default async function Navbar() {
                             asChild
                             className="text-white hover:bg-white/20 hover:text-white transition-all duration-300 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/30 hover:scale-105"
                         >
-                            <a href="/" className="flex items-center space-x-2">
+                            <Link href="/" className="flex items-center space-x-2">
                                 <Home className="h-4 w-4 transition-transform duration-300 hover:bounce" />
                                 <span className="hidden md:inline">Anasayfa</span>
-                            </a>
+                            </Link>
                         </Button>
 
                         <Button
@@ -40,10 +42,10 @@ export default async function Navbar() {
                             asChild
                             className="text-white hover:bg-white/20 hover:text-white transition-all duration-300 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/30 hover:scale-105"
                         >
-                            <a href="/about" className="flex items-center space-x-2">
+                            <Link href="/about" className="flex items-center space-x-2">
                                 <FileText className="h-4 w-4 transition-transform duration-300 hover:bounce" />
                                 <span className="hidden md:inline">Hakkımda</span>
-                            </a>
+                            </Link>
                         </Button>
 
                         {isMe && <Button
@@ -52,10 +54,10 @@ export default async function Navbar() {
                             asChild
                             className="text-white hover:bg-white/20 hover:text-white transition-all duration-300 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/30 hover:scale-105"
                         >
-                            <a href="/books/new" className="flex items-center space-x-2">
+                            <Link href="/books/new" className="flex items-center space-x-2">
                                 <Plus className="h-4 w-4 transition-transform duration-300 hover:rotate-90" />
                                 <span className="hidden md:inline">Add Book</span>
-                            </a>
+                            </Link>
                         </Button>}
 
                         {!session?.user ? (
@@ -65,10 +67,10 @@ export default async function Navbar() {
                                 asChild
                                 className="text-white hover:bg-white/20 hover:text-white transition-all duration-300 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/30 hover:scale-105"
                             >
-                                <a href="/register" className="flex items-center space-x-2">
+                                <Link href="/register" className="flex items-center space-x-2">
                                     <User className="h-4 w-4 transition-transform duration-300 hover:scale-125" />
                                     <span className="hidden md:inline">Giriş yap</span>
-                                </a>
+                                </Link>
                             </Button>
                         ) : (
                             <>
