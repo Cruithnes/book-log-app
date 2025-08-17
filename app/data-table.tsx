@@ -168,7 +168,7 @@ export function DataTable<TData, TValue>({
                                 <ChevronRight />
                             </Button>
                             <span className="text-sm ml-2">
-                                Sayfa {table.getState().pagination.pageIndex + 1} \ {table.getPageCount()}
+                                Sayfa {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
                             </span>
                         </div>
                     </div>
@@ -270,7 +270,7 @@ export function DataTable<TData, TValue>({
                     </Button>
 
                     <span className="text-sm">
-                        Sayfa {table.getState().pagination.pageIndex + 1} \ {table.getPageCount()}
+                        Sayfa {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
                     </span>
 
                     <Button

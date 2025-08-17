@@ -27,3 +27,8 @@ export async function uploadToCloudinary(file: File): Promise<string | null> {
   }
 }
 
+export function isAdmin(session: any): boolean {
+  if (!session?.user?.email) return false;
+  return session.user.email === process.env.ADMIN_EMAIL;
+}
+

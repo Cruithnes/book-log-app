@@ -1,13 +1,15 @@
 'use server'
 
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { v4 as uuidv4 } from "uuid";
 import { z } from 'zod';
 
 import { NewBookSchema, NewBookInput, EditBookSchema, EditBookInput } from '@/app/schemas';
 import { fetchBookById } from './data';
+import { auth, signOut } from '@/auth';
+
+import { isAdmin } from '@/lib/utils';
 
 export type State = {
     errors?: {
@@ -25,7 +27,11 @@ export type State = {
 }
 
 const QuoteSchema = z.object({
-    quote: z.string(),
+    quote: z.string().min(1).max(700),
+})
+
+const CommentSchema = z.object({
+    comment: z.string(),
 })
 
 // export async function fetchBookCover(title: string) {
@@ -62,6 +68,12 @@ export async function fetchBookCover(title: string, author: string) {
 
 
 export async function createBook(formData: NewBookInput) {
+    const session = await auth();
+
+    if (!isAdmin(session)) {
+        throw new Error("Bu işlem için yetkiniz bulunmuyor")
+    }
+
     const rawData = {
         title: formData.title,
         author: formData.author,
@@ -88,7 +100,6 @@ export async function createBook(formData: NewBookInput) {
     try {
         await prisma.book.create({
             data: {
-                id: uuidv4(),
                 ...data,
                 imageUrl: imageUrl,
             },
@@ -104,7 +115,11 @@ export async function createBook(formData: NewBookInput) {
 
 export async function deleteBook(id: string) {
 
-    // const id = formData.get("id") as string;
+    const session = await auth();
+
+    if (!isAdmin(session)) {
+        throw new Error("Bu işlem için yetkiniz bulunmuyor")
+    }
 
     const book = await fetchBookById(id);
     if (!book) {
@@ -113,6 +128,10 @@ export async function deleteBook(id: string) {
     }
 
     await prisma.quote.deleteMany({
+        where: { bookId: id },
+    })
+
+    await prisma.comment.deleteMany({
         where: { bookId: id },
     })
 
@@ -126,6 +145,13 @@ export async function deleteBook(id: string) {
 
 
 export async function updateBook(id: string, formData: EditBookInput) {
+
+    const session = await auth();
+
+    if(!isAdmin(session)){
+        throw new Error("Bu işlem için yetkin yok")
+    }
+
     const rawData = {
         title: formData.title,
         author: formData.author,
@@ -166,6 +192,13 @@ export async function handleUpdate(id: string, formData: EditBookInput) {
 }
 
 export async function createQuote(id: string, formData: FormData) {
+
+    const session = await auth();
+    
+    if(!isAdmin(session)){
+        throw new Error("Bu işlem için yetkin yok")
+    }
+
     const rawData = {
         quote: formData.get("quote"),
     };
@@ -181,7 +214,6 @@ export async function createQuote(id: string, formData: FormData) {
     try {
         await prisma.quote.create({
             data: {
-                id: uuidv4(),
                 quote: data.quote,
                 book: {
                     connect: { id }
@@ -197,6 +229,13 @@ export async function createQuote(id: string, formData: FormData) {
 }
 
 export async function deleteQuote(id: string) {
+
+    const session = await auth();
+    
+    if(!isAdmin(session)){
+        throw new Error("Bu işlem için yetkin yok")
+    }
+
     try {
         await prisma.quote.delete({
             where: { id }
@@ -206,4 +245,55 @@ export async function deleteQuote(id: string) {
         throw new Error("Delete failed");
     }
     revalidatePath(`/books/${id}/edit/quote`);
+}
+
+export async function createComment(formData: FormData, bookId: string) {
+    const session = await auth()
+
+    if (!session?.user) {
+        throw new Error("Kullanıcı giriş yapmamış");
+    }
+
+    const userId = session.user.email;
+
+    if(!userId) {
+        throw new Error("Kullanıcı bulunamadı")
+    }
+
+    const rawData = {
+        comment: formData.get("comment"),
+    };
+
+    const result = CommentSchema.safeParse(rawData);
+    if (!result.success) {
+        console.error("Validation error:", result.error.flatten());
+        throw new Error("Geçersiz yorum verisi");
+    }
+
+    const data = result.data;
+
+    try {
+        await prisma.comment.create({
+            data: {
+                comment: data.comment,
+                book: {
+                    connect: { id: bookId },
+                },
+                user: {
+                    connect: { email: userId },
+                }
+            }
+        });
+
+        console.log("Yorum başarıyla oluşturuldu");
+    } catch (error) {
+        console.error('Yorum oluşturulurken hata:', error);
+        throw new Error('Yorum oluşturulamadı');
+    }
+
+    revalidatePath(`/books/${bookId}`);
+}
+
+export async function logoutAction() {
+  await signOut({ redirectTo: "/" });
 }
