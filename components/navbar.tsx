@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { BookOpen, Home, LogOut, User, Plus } from "lucide-react"
+import { BookOpen, Home, LogOut, User, Plus, FileText } from "lucide-react"
 import { logoutAction } from "@/lib/actions";
 import { auth } from "@/auth";
 import { isAdmin } from "@/lib/utils";
@@ -31,6 +31,18 @@ export default async function Navbar() {
                             <a href="/" className="flex items-center space-x-2">
                                 <Home className="h-4 w-4 transition-transform duration-300 hover:bounce" />
                                 <span className="hidden md:inline">Anasayfa</span>
+                            </a>
+                        </Button>
+
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            asChild
+                            className="text-white hover:bg-white/20 hover:text-white transition-all duration-300 backdrop-blur-sm rounded-xl border border-white/10 hover:border-white/30 hover:scale-105"
+                        >
+                            <a href="/about" className="flex items-center space-x-2">
+                                <FileText className="h-4 w-4 transition-transform duration-300 hover:bounce" />
+                                <span className="hidden md:inline">Hakkımda</span>
                             </a>
                         </Button>
 
