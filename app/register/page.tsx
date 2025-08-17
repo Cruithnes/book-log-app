@@ -1,8 +1,8 @@
-import { RegisterForm } from "@/components/register-form"
+import RegisterForm from "@/components/register-form"
 
 export default function Page() {
     return (
-        <div className="fixed inset-0 flex items-center justify-center">
+        <div className="min-h-screen flex items-center justify-center pt-16">
             <RegisterForm />
         </div>
     )

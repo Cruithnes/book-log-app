@@ -12,7 +12,6 @@ export default async function Page({
 
     const session = await auth();
     const isMe = isAdmin(session);
-    console.log(isMe);
 
     const { id } = await params;
     const book = await fetchBookById(id);

@@ -13,7 +13,7 @@ export default function AboutMe() {
                                 Emre Mert Tokgöz
                             </h1>
                             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-                                Full Stack Developer <span className="font-semibold text-white">&</span> IT Security <span className="font-semibold text-white">&</span> Kitap Tutkunu
+                                Full Stack Developer <span className="font-semibold text-white">&</span> IT Security
                             </p>
                         </div>
                     </div>

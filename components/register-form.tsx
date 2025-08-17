@@ -18,7 +18,7 @@ import { FaGithub } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 
 
-export function RegisterForm() {
+export default function RegisterForm() {
     return (
         <Card className="w-full shadow-md rounded-xl max-w-sm">
             <CardHeader className="space-y-1 text-center">
@@ -60,6 +60,7 @@ export function RegisterForm() {
                         size="lg"
                         variant="outline"
                         className="flex-1"
+                        onClick={() => signIn("google", { callbackUrl: "/" })}
                     >
                         <FcGoogle className="h-5 w-5" />
                     </Button>

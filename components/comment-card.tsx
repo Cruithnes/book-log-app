@@ -127,6 +127,7 @@ export function CommentSection({
                             onSubmit={async (e) => {
                                 e.preventDefault();
                                 const formData = new FormData(e.currentTarget);
+                                e.currentTarget.reset();
                                 try {
                                     await createComment(formData, bookId);
                                 } catch (error) {
