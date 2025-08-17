@@ -1,7 +1,6 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table"
-import { NewBookInput } from "./schemas";
 import { Book } from "./generated/prisma";
 
 import Link from "next/link";

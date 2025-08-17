@@ -1,5 +1,5 @@
-import React from 'react';
-import TechMarquee from '@/components/TechMarquee';
+import React from "react";
+import TechMarquee from "@/components/TechMarquee";
 
 export default function AboutMe() {
     return (
@@ -53,7 +53,7 @@ export default function AboutMe() {
                                     <p>
                                         Ayrıca <span className="text-foreground font-medium">siber güvenlik</span>,
                                         <span className="text-foreground font-medium"> veri tabanı sistemleri (postgreSQL ve mongodb) </span>
-                                        <span className="text-foreground font-medium">veri tabanı sistemleri ORM'leri (prisma ve mongoose) </span>
+                                        <span className="text-foreground font-medium">veri tabanı sistemleri ORM&apos;leri (prisma ve mongoose) </span>
                                         ve <span className="text-foreground font-medium">Linux isletim sistemleriyle</span> ilgileniyor;
                                         <span className="text-foreground font-medium"> CLI ve sunucu yönetimi</span> konusunda kendimi geliştiriyorum.
                                     </p>
