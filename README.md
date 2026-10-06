@@ -13,4 +13,4 @@ Bu projeyi geliştirirken kullandığım teknolojiler:
 - **OpenLibrary API** – Kitap adına göre otomatik kapak görselleri
 - **Cloudinary** – Kitap kapak görsellerini manuel yüklemek için
 
-Aktif Link: emremert.site
+Aktif Link: [emremert.site]
