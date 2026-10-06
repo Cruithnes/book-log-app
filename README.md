@@ -12,3 +12,5 @@ Bu projeyi geliştirirken kullandığım teknolojiler:
 - **TanStack Table** – Tablo yapısı
 - **OpenLibrary API** – Kitap adına göre otomatik kapak görselleri
 - **Cloudinary** – Kitap kapak görsellerini manuel yüklemek için
+
+Aktif Link: emremert.site
